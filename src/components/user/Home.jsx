@@ -1,4 +1,4 @@
-export default function HomeMain() {
+export default function Home() {
     return (
         <main className="main-wrapper col-md-9 ms-sm-auto py-4 col-lg-9 px-md-4 border-start">
             <div className="title-group mb-3">
