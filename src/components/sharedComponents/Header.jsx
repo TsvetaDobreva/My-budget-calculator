@@ -4,7 +4,7 @@ export default function Header(props) {
         <div className="col-md-3 col-lg-3 me-0 px-3 fs-6">
             <a className="navbar-brand" href="index.html">
                 <i className="bi-box"></i>
-                Mini Finance
+                My Finance
             </a>
         </div>
 

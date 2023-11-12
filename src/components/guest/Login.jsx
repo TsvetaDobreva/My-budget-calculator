@@ -1,4 +1,44 @@
-export default function Login() {
+import { useState, useRef, useEffect } from 'react';
+
+const initialState = {
+    email: '',
+    password: ''
+ }
+
+export default function Login({
+    formRef
+}) {
+    const [formValue, setFormValue] = useState(initialState);
+    const [errors, setErrors] = useState({});
+
+    const changeHandler = (e) => {
+        let value = '';
+
+        switch(e.target.type) {
+            case 'number' : value = Number(e.target.value);
+                break;
+            default: value = e.target.value;
+                break;
+        }
+
+        setFormValue(state => ({
+            ...state,
+            [e.target.name] : value
+        }));
+    }
+
+    const resetFormHandler = () => {
+        setFormValue(initialState);
+        setErrors({});
+    }
+
+    const submitHandler = (e) => {
+        e.preventDefault();
+        console.log(formValue)
+        resetFormHandler();
+    }
+
+
     return (
         <main className="main-wrapper col-md-9 ms-sm-auto py-4 col-lg-9 px-md-4 border-start">
     
@@ -6,16 +46,35 @@ export default function Login() {
                 <div className="col-lg-7 col-12">
                     <div className="custom-block bg-white">
                         <div className="tab-content" id="myTabContent">
-                            <div className="tab-pane fade show active" id="password-tab-pane" role="tabpanel" aria-labelledby="password-tab" tabindex="0">
+                            <div className="tab-pane fade show active" id="password-tab-pane" role="tabpanel" aria-labelledby="password-tab" tabIndex="0">
                                 <h3 className="mb-4">Login</h3>
 
-                                <form className="custom-form password-form" action="#" method="post" role="form">
-                                    <input type="email" name="email" id="email" className="form-control" placeholder="Email" required="" />
+                                <form ref={formRef} onSubmit={submitHandler} className="custom-form password-form" role="form">
+                                    <input 
+                                        type="text" 
+                                        name="email" 
+                                        id="email" 
+                                        className="form-control" 
+                                        placeholder="Email"
+                                        value={formValue.email}
+                                        onChange={changeHandler}
+                                        required="" 
+                                    />
 
-                                    <input type="password" name="password" id="password" pattern="[0-9a-zA-Z]{4,10}" className="form-control" placeholder="Password" required="" />
+                                    <input 
+                                        type="password" 
+                                        name="password" 
+                                        id="password" 
+                                        pattern="[0-9a-zA-Z]{4,10}" 
+                                        className="form-control" 
+                                        placeholder="Password" 
+                                        value={formValue.password}
+                                        onChange={changeHandler}
+                                        required="" 
+                                    />
 
                                     <div className="d-flex">
-                                        <button type="button" className="form-control me-3">
+                                        <button type="submit" className="form-control me-3">
                                             Login
                                         </button>
                                     </div>
