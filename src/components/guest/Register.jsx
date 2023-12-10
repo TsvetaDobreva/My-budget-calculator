@@ -1,7 +1,9 @@
  import { useState, useRef, useEffect } from 'react';
+ import { userService } from '../../services/userService';
+ import { useNavigate } from 'react-router-dom';
 
  const initialState = {
-    fullName: '',
+    username: '',
     email: '',
     password: '',
     rePassword: ''
@@ -13,6 +15,8 @@ export default function Register( {
 }) {
     const [formValue, setFormValue] = useState(initialState);
     const [errors, setErrors] = useState({});
+    const navigate = useNavigate();
+
 
     const changeHandler = (e) => {
         let value = '';
@@ -37,8 +41,9 @@ export default function Register( {
 
     const submitHandler = (e) => {
         e.preventDefault();
-        console.log(formValue);
-        resetFormHandler()
+        userService.register(formValue.username, formValue.email, formValue.password);
+        resetFormHandler();
+        navigate('/');
     }
 
     return (
@@ -54,11 +59,11 @@ export default function Register( {
                                 <form ref={formRef} onSubmit={submitHandler} className="custom-form password-form" role="form">
                                     <input 
                                         type="text" 
-                                        name="fullName" 
-                                        id="full-name" 
+                                        name="username" 
+                                        id="username" 
                                         className="form-control" 
-                                        placeholder="Full name"
-                                        value={formValue.fullName} 
+                                        placeholder="Username"
+                                        value={formValue.username} 
                                         onChange={changeHandler}
                                         required="" 
                                     />

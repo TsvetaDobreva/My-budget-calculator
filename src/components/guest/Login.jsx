@@ -1,4 +1,6 @@
 import { useState, useRef, useEffect } from 'react';
+import { userService } from '../../services/userService';
+import { useNavigate } from 'react-router-dom';
 
 const initialState = {
     email: '',
@@ -10,6 +12,7 @@ export default function Login({
 }) {
     const [formValue, setFormValue] = useState(initialState);
     const [errors, setErrors] = useState({});
+    const navigate = useNavigate();
 
     const changeHandler = (e) => {
         let value = '';
@@ -34,8 +37,9 @@ export default function Login({
 
     const submitHandler = (e) => {
         e.preventDefault();
-        console.log(formValue)
+        userService.login(formValue.email, formValue.password);
         resetFormHandler();
+        navigate('/');
     }
 
 

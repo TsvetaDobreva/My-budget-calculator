@@ -9,12 +9,13 @@ import Home from './components/user/Home'
 import Nav from './components/sharedComponents/Nav'
 import Login from './components/guest/Login';
 import Register from './components/guest/Register';
-import MyProfile from './components/user/MyProfile';
+import MyProfile from './components/user/MyProfil/MyProfil';
 import Statistic from './components/user/Statistic';
 import Wallet from './components/user/Wallet';
 import AddTransaction from './components/user/AddTransaction';
 import NotFound from './components/sharedComponents/NotFound';
 import Details from './components/user/Details';
+import AddCard from './components/user/MyProfil/cardInformation/AddCard';
 
 function App() {
   const [count, setCount] = useState(0)
@@ -30,6 +31,7 @@ function App() {
             <Route path='/login' element={< Login />} />
             <Route path='/register' element={< Register />} />
             <Route path='/profile' element={< MyProfile />} />
+            <Route path='/profile/addCard' element={< AddCard />} />
             <Route path='/statistic' element={< Statistic />} />
             <Route path='/wallet' element={< Wallet />} />
             <Route path='/transaction' element={< AddTransaction />} />
