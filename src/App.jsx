@@ -11,36 +11,41 @@ import Login from './components/guest/Login';
 import Register from './components/guest/Register';
 import MyProfile from './components/user/MyProfil/MyProfil';
 import Statistic from './components/user/Statistic';
-import Wallet from './components/user/Wallet';
+import Wallet from './components/user/Wallet/Wallet';
 import AddTransaction from './components/user/AddTransaction';
 import NotFound from './components/sharedComponents/NotFound';
 import Details from './components/user/Details';
 import AddCard from './components/user/MyProfil/cardInformation/AddCard';
+import { AuthProvider } from './utils/context/userContext';
+import Logout from './components/user/Logout';
 
 function App() {
   const [count, setCount] = useState(0)
 
   return (
     <>
-      <Header />
-      <div className="container-fluid">
-        <div className="row">
-          <Nav />
-          <Routes>
-            <Route path='/' element={< Home />} />
-            <Route path='/login' element={< Login />} />
-            <Route path='/register' element={< Register />} />
-            <Route path='/profile' element={< MyProfile />} />
-            <Route path='/profile/addCard' element={< AddCard />} />
-            <Route path='/statistic' element={< Statistic />} />
-            <Route path='/wallet' element={< Wallet />} />
-            <Route path='/transaction' element={< AddTransaction />} />
-            <Route path='/transaction/details' element={< Details />} />
-            <Route path='/*' element={< NotFound />} />
-          </Routes>
+      <AuthProvider>
+        <Header />
+        <div className="container-fluid">
+          <div className="row">
+            <Nav />
+            <Routes>
+              <Route path='/' element={< Home />} />
+              <Route path='/login' element={< Login />} />
+              <Route path='/register' element={< Register />} />
+              <Route path='/logout' element={< Logout />} />
+              <Route path='/profile' element={< MyProfile />} />
+              <Route path='/profile/addCard' element={< AddCard />} />
+              <Route path='/statistic' element={< Statistic />} />
+              <Route path='/wallet' element={< Wallet />} />
+              <Route path='/transaction' element={< AddTransaction />} />
+              <Route path='/transaction/details' element={< Details />} />
+              <Route path='/*' element={< NotFound />} />
+            </Routes>
+          </div>
         </div>
-      </div>
-      <Footer />
+        <Footer />
+      </AuthProvider>
     </>
   )
 }

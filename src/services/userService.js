@@ -5,27 +5,24 @@ const endPoint = {
 }
 
 async function login(email, password) {
-    const data = await api.post('login', { email, password });
-    sessionStorage.setItem('userData', JSON.stringify(data));
-    return data;
+    return await api.post('login', { email, password });
 }
 
 async function register(username, email, password) {
+    return await api.post('users', { username, email, password });
+}
 
-    const data = await api.post('users', { username, email, password }); 
-    sessionStorage.setItem('userData', JSON.stringify(data));
-    return data;
+async function logout() {
+    return await api.post('logout', {});
 }
 
 async function updateUser(data) {
-    const userData = JSON.parse(sessionStorage.getItem('userData'));
-    const id = userData.objectId;
+    const id = localStorage.getItem('objectId');
     return await api.put(`${endPoint.users}/${id}`, data);
 }
 
 async function getUser() {
-    const userData = JSON.parse(sessionStorage.getItem('userData'));
-    const id = userData.objectId;
+    const id = localStorage.getItem('objectId');
     const data = await api.get(`users/${id}`);
     return mapUserInfo(data);
 }
@@ -40,4 +37,10 @@ function mapUserInfo(userInfo) {
     }
 }
 
-export const userService = { login, register, updateUser, getUser };
+export const userService = {
+    login,
+    register,
+    logout,
+    updateUser,
+    getUser
+};

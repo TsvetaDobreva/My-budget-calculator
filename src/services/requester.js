@@ -16,9 +16,9 @@ async function requester(url, method, data) {
         option.body = JSON.stringify(data);
     }
    
-    const userData = sessionStorage.getItem('userData') && JSON.parse(sessionStorage.getItem('userData'))
-    if(userData) {
-       option.headers['X-Parse-Session-Token'] = userData.sessionToken;
+    const sessionToken = localStorage.getItem('sessionToken')
+    if(sessionToken) {
+       option.headers['X-Parse-Session-Token'] = sessionToken;
     }
 
     try {
