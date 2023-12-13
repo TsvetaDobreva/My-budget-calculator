@@ -18,6 +18,7 @@ import Details from './components/user/Details';
 import AddCard from './components/user/MyProfil/cardInformation/AddCard';
 import { AuthProvider } from './utils/context/userContext';
 import Logout from './components/user/Logout';
+import AuthGuard from './components/guards/AuthGuard';
 
 function App() {
   const [count, setCount] = useState(0)
@@ -33,13 +34,16 @@ function App() {
               <Route path='/' element={< Home />} />
               <Route path='/login' element={< Login />} />
               <Route path='/register' element={< Register />} />
-              <Route path='/logout' element={< Logout />} />
-              <Route path='/profile' element={< MyProfile />} />
-              <Route path='/profile/addCard' element={< AddCard />} />
-              <Route path='/statistic' element={< Statistic />} />
-              <Route path='/wallet' element={< Wallet />} />
-              <Route path='/transaction' element={< AddTransaction />} />
-              <Route path='/transaction/details' element={< Details />} />
+
+              <Route element={< AuthGuard />}>
+                <Route path='/logout' element={< Logout />} />
+                <Route path='/profile' element={< MyProfile />} />
+                <Route path='/profile/addCard' element={< AddCard />} />
+                <Route path='/statistic' element={< Statistic />} />
+                <Route path='/wallet' element={< Wallet />} />
+                <Route path='/transaction' element={< AddTransaction />} />
+                <Route path='/transaction/details' element={< Details />} />
+              </Route>
               <Route path='/*' element={< NotFound />} />
             </Routes>
           </div>
