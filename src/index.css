@@ -135,7 +135,7 @@ strong {
 -----------------------------------------*/
 .main-wrapper {
   background: var(--section-bg-color);
-  min-height: calc(100vh - 65px);
+  min-height: calc(100vh - 113px);
 }
 
 .section-padding {
@@ -955,6 +955,8 @@ strong {
 .site-footer {
   padding-right: 20px;
   padding-left: 20px;
+  position: fixed;
+  bottom: 0;
 }
 
 .copyright-text {

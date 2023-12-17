@@ -17,7 +17,12 @@ async function getTransaction() {
     return await api.get('classes/Wallet');
 }
 
+async function getOrderedTransaction() {
+    return await api.get('classes/Wallet?order=createdAt');
+}
+
 export const walletService = {
     addTransaction,
-    getTransaction
+    getTransaction,
+    getOrderedTransaction
 }

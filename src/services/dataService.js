@@ -25,6 +25,16 @@ async function getSingleCard(id) {
     return await api.get(`classes/Cards/${id}`);
 }
 
+async function updatePrimaryCard(oldId, newId) {
+    if (!newId) {
+        return;
+    }
+    if (oldId) {
+        await api.put(`classes/Cards/${oldId}`, { isPrimaryCard: false });
+    }
+    return await api.put(`classes/Cards/${newId}`, { isPrimaryCard: true });
+}
+
 async function updateCardBalance(id, amount, operationType) {
     const card = await getSingleCard(id);
     let currentBalance = card.balance;
@@ -33,13 +43,14 @@ async function updateCardBalance(id, amount, operationType) {
         case 'income': currentBalance += Number(amount); break;
         case 'outgoing': currentBalance -= Number(amount); break;
     }
-
     return await api.put(`classes/Cards/${id}`, { balance: currentBalance })
 }
+
 
 export const dataService = {
     addCard,
     getCards,
     deleteCard,
+    updatePrimaryCard,
     updateCardBalance
 }

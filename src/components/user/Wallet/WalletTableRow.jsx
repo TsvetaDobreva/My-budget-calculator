@@ -26,7 +26,7 @@ export default function ({ data }) {
                 {data.amount.toFixed(2)}лв
             </td>
         </tr>
-    )
-}
+    );
+};
 
 

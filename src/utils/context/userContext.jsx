@@ -1,8 +1,8 @@
 import { createContext } from "react";
 import { useNavigate } from "react-router-dom";
+
 import { userService } from "../../services/userService";
 import usePersistedState from "../hooks/usePersistedSate";
-
 
 const UserContext = createContext();
 
@@ -41,6 +41,7 @@ export const AuthProvider = ({
         registerSubmitHandler,
         logoutHandler,
         username: auth.username,
+        img: auth.img,
         email: auth.email,
         objectId: auth.objectId,
         isAuthenticated: !!auth.objectId,
@@ -51,7 +52,7 @@ export const AuthProvider = ({
             {children}
         </UserContext.Provider>
     );
-}
+};
 
 UserContext.displayName = 'UserContext';
 

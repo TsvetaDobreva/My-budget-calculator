@@ -98,4 +98,4 @@ export default function Edit({ updateUserHandler, initialValue }) {
             </div>
         </div>
     );
-}
+};

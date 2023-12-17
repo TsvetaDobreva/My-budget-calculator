@@ -955,6 +955,8 @@ strong {
 .site-footer {
   padding-right: 20px;
   padding-left: 20px;
+  position: fixed;
+  bottom: 0;
 }
 
 .copyright-text {

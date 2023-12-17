@@ -34,6 +34,7 @@ function mapUserInfo(userInfo) {
         phone: userInfo.phone || '',
         birthday: userInfo.birthday || '',
         address: userInfo.address || '',
+        email: userInfo.email || ''
     }
 }
 

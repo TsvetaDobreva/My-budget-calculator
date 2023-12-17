@@ -68,5 +68,5 @@ export default function Statistic() {
             {console.log(seriesData)}
             <ReactApexChart style={{ marginLeft: '30%', marginTop: '10%' }} options={optionData} series={seriesData} type="pie" width={380} />
         </div>
-    )
-}
+    );
+};

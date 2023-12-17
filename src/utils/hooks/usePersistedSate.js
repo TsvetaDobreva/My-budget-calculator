@@ -28,4 +28,4 @@ export default function usePersistedState(key, defaultValue) {
         state,
         setPersistedState,
     ];
-}
+};

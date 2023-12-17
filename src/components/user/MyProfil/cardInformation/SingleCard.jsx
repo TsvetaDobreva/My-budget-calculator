@@ -1,5 +1,4 @@
-
-export default function SingleCard({ cardData, onDeleteCard }) {
+export default function SingleCard({ cardData, onDeleteCard, onChangePrimaryCard }) {
 
     return (
         <div className="custom-block custom-block-profile bg-white">
@@ -31,6 +30,16 @@ export default function SingleCard({ cardData, onDeleteCard }) {
                 <span>{cardData.cardType}</span>
             </p>
 
+            <p className="d-flex flex-wrap mb-2">
+                <strong>Primary card:</strong>
+                <input 
+                    type='checkbox' 
+                    onChange={onChangePrimaryCard}
+                    checked={cardData.isPrimaryCard}
+                    data-objectid={cardData.objectId}
+                />
+            </p>
+
         </div>
     );
-}
+};

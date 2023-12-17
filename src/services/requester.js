@@ -26,6 +26,7 @@ async function requester(url, method, data) {
 
         if(!response.ok) {      
             const message = await response.json();
+            debugger
             throw new Error(message);
         };
 
