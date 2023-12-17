@@ -1,10 +1,18 @@
-import { useContext } from "react";
-import { Link, Outlet } from "react-router-dom";
+import { useContext, useEffect, useState } from "react";
+import { Link, Outlet, useLocation } from "react-router-dom";
 
 import UserContext from "../../utils/context/userContext";
 
 export default function Nav() {
     const { isAuthenticated } = useContext(UserContext);
+    const location = useLocation();
+
+    const isActive = (path) => {
+        if (path === location.pathname) {
+            return 'nav-link active';
+        }
+        return 'nav-link';
+    };
 
     return (
         <>
@@ -13,7 +21,7 @@ export default function Nav() {
                     <ul className="nav flex-column h-100">
 
                         <li className="nav-item">
-                            <Link className="nav-link active" aria-current="page" to="/">
+                            <Link className={isActive('/')} aria-current="page" to="/">
                                 <i className="bi-house-fill me-2"></i>
                                 Overview
                             </Link>
@@ -22,14 +30,14 @@ export default function Nav() {
                         {!isAuthenticated && (
                             <>
                                 <li className="nav-item">
-                                    <Link className="nav-link" to="/register">
+                                    <Link className={isActive('/register')} to="/register">
                                         <i className="bi-box-arrow-up me-2"></i>
                                         Register
                                     </Link>
                                 </li>
 
                                 <li className="nav-item">
-                                    <Link className="nav-link" to="/login">
+                                    <Link className={isActive('/login')} to="/login">
                                         <i className="bi-box-arrow-right me-2"></i>
                                         Login
                                     </Link>
@@ -40,28 +48,28 @@ export default function Nav() {
                         {isAuthenticated && (
                             <>
                                 <li className="nav-item">
-                                    <Link className="nav-link" to="/profile">
+                                    <Link className={isActive('/profile')} to="/profile">
                                         <i className="bi-person me-2"></i>
                                         Profile
                                     </Link>
                                 </li>
 
                                 <li className="nav-item">
-                                    <Link className="nav-link" to="/statistic">
+                                    <Link className={isActive('/statistic')} to="/statistic">
                                         <i className="bi-graph-up me-2"></i>
                                         Statistic
                                     </Link>
                                 </li>
 
                                 <li className="nav-item">
-                                    <Link className="nav-link" to="/wallet">
+                                    <Link className={isActive('/wallet')} to="/wallet">
                                         <i className="bi-wallet me-2"></i>
                                         My Wallet
                                     </Link>
                                 </li>
 
                                 <li className="nav-item">
-                                    <Link className="nav-link" to="/transaction">
+                                    <Link className={isActive('/transaction')} to="/transaction">
                                         <i className="bi-cash-coin me-2"></i>
                                         Add transaction
                                     </Link>
@@ -80,5 +88,5 @@ export default function Nav() {
             </nav>
             <Outlet />
         </>
-    )
-}
+    );
+};

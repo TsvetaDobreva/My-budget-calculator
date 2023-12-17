@@ -1,4 +1,4 @@
-import { useContext } from 'react';
+import { useContext, useEffect } from 'react';
 
 import UserContext from '../../utils/context/userContext';
 import useForm from '../../utils/hooks/useForm';
@@ -11,8 +11,14 @@ const initialState = {
 }
 
 export default function Register() {
-    const { registerSubmitHandler } = useContext(UserContext);
-    const { values, onChange, onSubmit } = useForm(registerSubmitHandler, initialState);
+    const { registerSubmitHandler, authErrors, setAuthErrors } = useContext(UserContext);
+    const { values, onChange, onSubmit, errors } = useForm(registerSubmitHandler, initialState);
+
+    useEffect(() => {
+        return () => {
+            setAuthErrors({});
+        }
+    }, []);
 
     return (
         <main className="main-wrapper col-md-9 ms-sm-auto py-4 col-lg-9 px-md-4 border-start">
@@ -35,6 +41,7 @@ export default function Register() {
                                         onChange={onChange}
                                         required=""
                                     />
+                                    {authErrors.username && <small className="d-block text-danger">{authErrors.username}</small>}
 
                                     <input
                                         type="text"
@@ -46,30 +53,31 @@ export default function Register() {
                                         onChange={onChange}
                                         required=""
                                     />
+                                    {authErrors.email && <small className="d-block text-danger">{authErrors.email}</small>}
 
                                     <input
                                         type="password"
                                         name="password"
                                         id="password"
-                                        pattern="[0-9a-zA-Z]{4,10}"
                                         className="form-control"
                                         placeholder="Password"
                                         value={values.password}
                                         onChange={onChange}
                                         required=""
                                     />
+                                    {authErrors.password && <small className="d-block text-danger">{authErrors.password}</small>}
 
                                     <input
                                         type="password"
                                         name="rePassword"
                                         id="re-password"
-                                        pattern="[0-9a-zA-Z]{4,10}"
                                         className="form-control"
                                         placeholder="Confirm password"
                                         value={values.rePassword}
                                         onChange={onChange}
                                         required=""
                                     />
+                                    {authErrors.rePassword && <small className="d-block text-danger">{authErrors.rePassword}</small>}
 
                                     <div className="d-flex">
                                         <button type="submit" className="form-control me-3">

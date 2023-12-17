@@ -14,12 +14,11 @@ import Wallet from './components/user/Wallet/Wallet';
 import AddTransaction from './components/user/AddTransaction';
 import NotFound from './components/sharedComponents/NotFound';
 import AddCard from './components/user/MyProfil/cardInformation/AddCard';
-import { AuthProvider } from './utils/context/userContext';
 import Logout from './components/user/Logout';
 import AuthGuard from './components/guards/AuthGuard';
+import { AuthProvider } from './utils/context/userContext';
 
 function App() {
-  const [count, setCount] = useState(0)
 
   return (
     <>

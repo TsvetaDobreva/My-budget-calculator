@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react';
 import { dataService } from '../../services/dataService';
 import { walletService } from '../../services/walletService';
 import { useNavigate } from 'react-router-dom';
+import { validateTransaction } from '../../utils/validateTransaction';
 
 const initialValue = {
     date: new Date().getTime(),
@@ -16,6 +17,7 @@ export default function AddTransaction() {
     const [formValue, setFormValue] = useState(initialValue);
     const [cards, setCards] = useState([]);
     const [selectCard, setSelectCard] = useState({});
+    const [transactionErrors, setTransactionErrors] = useState({});
     const navigate = useNavigate();
 
     useEffect(() => {
@@ -24,12 +26,25 @@ export default function AddTransaction() {
         });
     }, []);
 
+    useEffect(() => {
+        return () => {
+            setTransactionErrors({});
+        }
+    }, []);
+
     const submitHandler = (e) => {
         e.preventDefault();
-        const cardNumber = cards.filter(x => x.objectId == selectCard)[0].cardNumber;
-        walletService.addTransaction(formValue, cardNumber);
-        dataService.updateCardBalance(selectCard, formValue.amount, formValue.operationType);
-        navigate('/wallet')
+        try {
+            validateTransaction(formValue);
+            const cardNumber = cards.filter(x => x.objectId == selectCard)[0].cardNumber;
+            walletService.addTransaction(formValue, cardNumber);
+            dataService.updateCardBalance(selectCard, formValue.amount, formValue.operationType);
+            navigate('/wallet');
+
+        } catch (error) {
+            setTransactionErrors(error);
+            navigate('/transaction');
+        }
     }
 
     const changeValue = (e) => {
@@ -81,6 +96,8 @@ export default function AddTransaction() {
                                     placeholder="Description"
                                     required=""
                                     onChange={changeValue} />
+                                {transactionErrors.description && <small className="d-block text-danger">{transactionErrors.description}</small>}
+
 
                                 <select name="operationType" id="operationType" className="form-control" defaultValue="default" onChange={changeValue}>
                                     <option value="default" hidden="hidden">Choose here</option>
@@ -96,6 +113,7 @@ export default function AddTransaction() {
                                     placeholder="Amount"
                                     required=""
                                     onChange={changeValue} />
+                                {transactionErrors.amount && <small className="d-block text-danger">{transactionErrors.amount}</small>}
 
                                 <div className="d-flex">
                                     <button type="submit" className="form-control me-3">

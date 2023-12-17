@@ -1,8 +1,10 @@
-import { createContext } from "react";
+import { createContext, useState } from "react";
 import { useNavigate } from "react-router-dom";
 
 import { userService } from "../../services/userService";
 import usePersistedState from "../hooks/usePersistedSate";
+import { validateRegister } from "../validateRegister";
+import { errorParser } from "../errorParser";
 
 const UserContext = createContext();
 
@@ -11,6 +13,7 @@ export const AuthProvider = ({
 }) => {
     const navigate = useNavigate();
     const [auth, setAuth] = usePersistedState('auth', {});
+    const [authErrors, setAuthErrors] = useState({});
 
     const loginSubmitHandler = async (values) => {
         const result = await userService.login(values.email, values.password);
@@ -22,12 +25,19 @@ export const AuthProvider = ({
     };
 
     const registerSubmitHandler = async (values) => {
-        const result = await userService.register(values.username, values.email, values.password);
+        try {
+            validateRegister(values);
+            const result = await userService.register(values.username, values.email, values.password);
+            setAuth(result);
+            localStorage.setItem('sessionToken', result.sessionToken);
+            localStorage.setItem('objectId', result.objectId);
+            navigate('/');
 
-        setAuth(result);
-        localStorage.setItem('sessionToken', result.sessionToken);
-        localStorage.setItem('objectId', result.objectId);
-        navigate('/');
+        } catch (error) {
+            setAuthErrors(errorParser(error));
+            navigate('/register');
+        }
+
     };
 
     const logoutHandler = () => {
@@ -45,6 +55,8 @@ export const AuthProvider = ({
         email: auth.email,
         objectId: auth.objectId,
         isAuthenticated: !!auth.objectId,
+        authErrors,
+        setAuthErrors,
     };
 
     return (
