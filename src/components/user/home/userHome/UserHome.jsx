@@ -11,7 +11,7 @@ import UserInfo from "./UserInfo";
 export default function UserHome() {
     const [currency, setCurrency] = useState({});
     const [userInfo, setUserInfo] = useState({});
-    const [primaryCard, setPrimaryCard] = useState({});
+    const [primaryCard, setPrimaryCard] = useState({validDate: '--/----', cardNumber: '****', balance: 0, ownerName: userInfo.username});
     const [balance, setBalance] = useState(0);
     const [lastTransaction, setLastTransaction] = useState([]);
 
@@ -29,6 +29,9 @@ export default function UserHome() {
 
     useEffect(() => {
         dataService.getCards().then((data) => {
+            if(!data.results.length) {
+                return;
+            }
             setPrimaryCard(data.results.find(x => x.isPrimaryCard));
             const sum = data.results.reduce((acc, value) => {
                 return acc + Number(value.balance)
@@ -52,7 +55,7 @@ export default function UserHome() {
 
             <div className="row my-4">
                 <div className="col-lg-7 col-12">
-                    {< PrimaryCard key={primaryCard.objectId} primaryCard={primaryCard} />}
+                    {< PrimaryCard key={primaryCard?.objectId} primaryCard={primaryCard} />}
 
                     <div className="custom-block bg-white">
                         <h5 className="mb-4">Your total balance: </h5>

@@ -16,12 +16,12 @@ export default function PrimaryCard({ primaryCard }) {
             <div className="d-flex">
                 <div>
                     <small>Valid Date</small>
-                    <p>{primaryCard.validDate}</p>
+                    <p>{primaryCard?.validDate}</p>
                 </div>
 
                 <div className="ms-auto">
                     <small>Card Holder</small>
-                    <p>{primaryCard.ownerName}</p>
+                    <p>{primaryCard?.ownerName}</p>
                 </div>
             </div>
         </div>

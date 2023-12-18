@@ -1,11 +1,13 @@
+import { Link } from "react-router-dom";
+
 export default function UserInfo({ userInfo }) {
 
     return (
         <div className="custom-block custom-block-profile-front custom-block-profile text-center bg-white">
             <div className="custom-block-profile-image-wrap mb-4">
-                <img src={userInfo.img} className="custom-block-profile-image img-fluid" alt="" />
-
-                <a href="setting.html" className="bi-pencil-square custom-block-edit-icon"></a>
+                <img src={userInfo.img !== "'' " ? userInfo.img : '../../../../../public/images/profilImg.png'} className="custom-block-profile-image img-fluid" alt="" />
+                
+                <Link to="/profile" className="bi-pencil-square custom-block-edit-icon"></Link>
             </div>
 
             <p className="d-flex flex-wrap mb-2">

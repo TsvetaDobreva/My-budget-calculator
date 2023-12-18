@@ -19,6 +19,7 @@ async function logout() {
 async function updateUser(data) {
     const id = localStorage.getItem('objectId');
     return await api.put(`${endPoint.users}/${id}`, data);
+   
 }
 
 async function getUser() {

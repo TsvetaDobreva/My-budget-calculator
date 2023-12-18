@@ -38,8 +38,10 @@ export default function AddTransaction() {
             validateTransaction(formValue);
             const cardNumber = cards.filter(x => x.objectId == selectCard)[0].cardNumber;
             walletService.addTransaction(formValue, cardNumber);
-            dataService.updateCardBalance(selectCard, formValue.amount, formValue.operationType);
-            navigate('/wallet');
+            dataService.updateCardBalance(selectCard, formValue.amount, formValue.operationType).then(() => {
+                navigate('/wallet');
+            });
+
 
         } catch (error) {
             setTransactionErrors(error);

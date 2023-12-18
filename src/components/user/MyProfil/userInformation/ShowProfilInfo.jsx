@@ -1,8 +1,10 @@
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import Edit from "./Edit";
 import { userService } from "../../../../services/userService";
+import UserContext from "../../../../utils/context/userContext";
 
 export default function ShowProfilInfo() {
+    const { updateUserHandler } = useContext(UserContext);
     const [isEdit, setIsEdit] = useState(false);
     const [userInfo, setUserInfo] = useState({
         img: '',
@@ -12,6 +14,7 @@ export default function ShowProfilInfo() {
         address: '',
     });
 
+
     useEffect(() => {
         userService.getUser().then(data => {
             setUserInfo(data);
@@ -19,7 +22,8 @@ export default function ShowProfilInfo() {
     }, []);
 
     const userInfoUpdate = (value) => {
-        userService.updateUser(value);
+        // userService.updateUser(value);
+        updateUserHandler(value)
         setUserInfo(value);
         setIsEdit(false);
     };
@@ -37,7 +41,7 @@ export default function ShowProfilInfo() {
 
                 <div className="col-lg-3 col-12 mb-4 mb-lg-0">
                     <div className="custom-block-profile-image-wrap">
-                        <img src={userInfo.img ? userInfo.img : '../../../../public/images/profilImg.png'} alt="" className="custom-block-profile-image img-fluid" />
+                        <img src={userInfo.img !== "'' " ? userInfo.img : '../../../../public/images/profilImg.png'} alt="" className="custom-block-profile-image img-fluid" />
 
                         <a onClick={onChangeEdit} className="bi-pencil-square custom-block-edit-icon"></a>
                     </div>
@@ -75,4 +79,4 @@ export default function ShowProfilInfo() {
             </div>
         </div>
     );
-};
+}

@@ -17,7 +17,6 @@ export const AuthProvider = ({
 
     const loginSubmitHandler = async (values) => {
         const result = await userService.login(values.email, values.password);
-
         setAuth(result);
         localStorage.setItem('sessionToken', result.sessionToken);
         localStorage.setItem('objectId', result.objectId);
@@ -37,8 +36,17 @@ export const AuthProvider = ({
             setAuthErrors(errorParser(error));
             navigate('/register');
         }
-
     };
+
+    const updateUserHandler = async (values) => {
+        await userService.updateUser(values);
+        const result = await userService.getUser();
+        setAuth(state => ({
+            ...state,
+            ...result
+        }));
+        return result;
+    }
 
     const logoutHandler = () => {
         setAuth({});
@@ -50,6 +58,7 @@ export const AuthProvider = ({
         loginSubmitHandler,
         registerSubmitHandler,
         logoutHandler,
+        updateUserHandler,
         username: auth.username,
         img: auth.img,
         email: auth.email,

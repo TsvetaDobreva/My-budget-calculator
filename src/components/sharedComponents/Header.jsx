@@ -1,17 +1,18 @@
 import { useContext } from "react";
 import UserContext from "../../utils/context/userContext";
+import { Link } from "react-router-dom";
 
 
 export default function Header() {
     const { img } = useContext(UserContext);
-
+   
     return (
         <header className="navbar sticky-top flex-md-nowrap">
             <div className="col-md-3 col-lg-3 me-0 px-3 fs-6">
-                <a className="navbar-brand" href="index.html">
+                <Link className="navbar-brand" to="/"> 
                     <i className="bi-box"></i>
                     My Finance
-                </a>
+                </Link>
             </div>
 
             <button className="navbar-toggler position-absolute d-md-none collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#sidebarMenu" aria-controls="sidebarMenu" aria-expanded="false" aria-label="Toggle navigation">
@@ -135,7 +136,7 @@ export default function Header() {
 
                     <div className="dropdown px-3">
                         <a className="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                            <img src={img ? img : '../../../public/images/profilImg.png' } className="profile-image img-fluid" alt="" />
+                            <img src={img !== "'' " ? img : '../../../public/images/profilImg.png' } className="profile-image img-fluid" alt="" />
                         </a>
                     </div>
                 </div>
