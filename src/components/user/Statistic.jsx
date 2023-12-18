@@ -30,18 +30,18 @@ const areaChart = {
             type: 'area'
         },
         dataLabels: {
-            enabled: false
+            enabled: true
         },
         stroke: {
             curve: 'smooth'
         },
         xaxis: {
-            type: 'datetime',
-            categories: ["2018-09-19T00:00:00.000Z", "2018-09-19T01:30:00.000Z", "2018-09-19T02:30:00.000Z", "2018-09-19T03:30:00.000Z", "2018-09-19T04:30:00.000Z", "2018-09-19T05:30:00.000Z", "2018-09-19T06:30:00.000Z"]
+            type: 'date',
+            categories: []
         },
         tooltip: {
             x: {
-                format: 'dd/MM/yy HH:mm'
+                format: 'dd/MM/yy'
             },
         },
     },
@@ -65,7 +65,7 @@ export default function Statistic() {
             setAreaData(state => ({
                 ...state,
                 xaxis: {
-                    type: 'datetime',
+                    type: 'date',
                     categories: formatedObject.areaDates
                 }
             }))
@@ -90,7 +90,9 @@ export default function Statistic() {
 
         const areaDates = [];
 
-        data.forEach(record => {
+        const areaObj = {};
+
+        data.forEach((record, i) => {
             switch (record['label']) {
                 case 'salary': pieResult['Salary'] += record.amount; break;
                 case 'credit': pieResult['Credit'] += record.amount; break;
@@ -101,12 +103,23 @@ export default function Statistic() {
                 case 'other': pieResult['Other'] += record.amount; break;
             };
 
+            const currentDate = new Date(record.date).toDateString();
+            if (!areaObj.hasOwnProperty(currentDate)) {
+                areaObj[currentDate] = {
+                    income: 0,
+                    outgoing: 0
+                }
+            }
             switch (record['operationType']) {
                 case 'income':
+                    // areaObj[currentDate]['income'] += record.amount;
                     areaResult[0].data.push(record.amount);
+                    areaResult[1].data.push(0);
                     areaDates.push(new Date(record.date).toDateString());
                     break
                 case 'outgoing':
+                    // areaObj[currentDate]['outgoing'] += record.amount;
+                    areaResult[0].data.push(0);
                     areaResult[1].data.push(record.amount);
                     areaDates.push(new Date(record.date).toDateString());
                     break
